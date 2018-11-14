@@ -25,67 +25,76 @@ public class RequestController{
 	@Autowired
 	RequestDAO DAO;
 	
-	/* to save an employee*/
+	/* to save an Request*/
 	@PostMapping("/add")
-	public Request createEmployee(@Valid @RequestBody Request emp) {
-		return DAO.save(emp);
+	public Request createEmployee(@Valid @RequestBody Request req) {
+		req.setPosition("F");
+		return DAO.save(req);
 	}
 	
-	/*get all employees*/
+	/*get all Request*/
 	@GetMapping("/getall")
 	public List<Request> getAllRequest(){
 		return DAO.findAll();
 	}
-//	
-//	/*get employee by empid*/
-//	@GetMapping("/employees/{id}")
-//	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value="id") Long empid){
-//		
-//		Employee emp=employeeDAO.findOne(empid);
-//		
-//		if(emp==null) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		return ResponseEntity.ok().body(emp);
-//		
-//	}
-//	
-//	
-//	/*update an employee by empid*/
-//	@PutMapping("/employees/{id}")
-//	public ResponseEntity<Employee> updateEmployee(@PathVariable(value="id") Long empid,@Valid @RequestBody Employee empDetails){
-//		
-//		Employee emp=employeeDAO.findOne(empid);
-//		if(emp==null) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		
-//		emp.setName(empDetails.getName());
-//		emp.setDesignation(empDetails.getDesignation());
-//		emp.setExpertise(empDetails.getExpertise());
-//		
-//		Employee updateEmployee=employeeDAO.save(emp);
-//		return ResponseEntity.ok().body(updateEmployee);
-//		
-//		
-//		
-//	}
-//	
-//	/*Delete an employee*/
-//	@DeleteMapping("/employees/{id}")
-//	public ResponseEntity<Employee> deleteEmployee(@PathVariable(value="id") Long empid){
-//		
-//		Employee emp=employeeDAO.findOne(empid);
-//		if(emp==null) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		employeeDAO.delete(emp);
-//		
-//		return ResponseEntity.ok().build();
-//		
-//		
-//	}
+
+//	/*get Request by id*/
+	@GetMapping("/{id}")
+	public ResponseEntity<Request> getRequestById(@PathVariable(value="id") Long id){
+		
+		Request req = DAO.findOne(id);
+		
+		if(req==null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok().body(req);
+	}
 	
+	/*update a position of Request by id request*/
+	@PutMapping("/position/{id}")
+	public ResponseEntity<Request> updatePosition(@PathVariable(value="id") Long id){
+		
+		Request req = DAO.findOne(id);
+		if(req==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		req.setPosition("T");
+		
+		Request updateRequest = DAO.save(req);
+		return ResponseEntity.ok().body(updateRequest);	
+	}
+
+	
+	/*update a driver of Request by id request*/
+	@PutMapping("/driver/{id}")
+	public ResponseEntity<Request> updateDriver(@PathVariable(value="id") Long id,@Valid @RequestBody Long id_driver){
+		
+		Request req = DAO.findOne(id);
+		if(req==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		req.setId_driver(id_driver);
+		
+		Request updateRequest = DAO.save(req);
+		return ResponseEntity.ok().body(updateRequest);	
+	}
+	
+	/*update a status of Request by id request*/
+	@PutMapping("/status/{id}")
+	public ResponseEntity<Request> updateStatus(@PathVariable(value="id") Long id,@Valid @RequestBody String status){
+		
+		Request req = DAO.findOne(id);
+		if(req==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		req.setStatus(status);
+		
+		Request updateRequest = DAO.save(req);
+		return ResponseEntity.ok().body(updateRequest);	
+	}
 	
 
 }

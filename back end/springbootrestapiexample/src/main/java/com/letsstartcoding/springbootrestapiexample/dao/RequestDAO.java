@@ -14,31 +14,29 @@ public class RequestDAO {
 	@Autowired
 	RequestRepository RequestRepository;
 	
-	/*to save an employee*/
+	/*to save an Request*/
 	
 	public Request save(Request dri) {
 		return RequestRepository.save(dri);
 	}
 	
 	
-	/* search all employees*/
+	/* search all Request*/
 	
 	public List<Request> findAll(){
 		return RequestRepository.findAll();
 	}
 	
 	
-	/*get an employee by id*/
+	/*get an Request by id*/
 	public Request findOne(Long id) {
 		return RequestRepository.findOne(id);
 	}
 	
 	
-	/*delete an employee*/
-	
+	/*delete an Request*/
 	public void delete(Request dri) {
 		RequestRepository.delete(dri);
 	}
-	
 
 }

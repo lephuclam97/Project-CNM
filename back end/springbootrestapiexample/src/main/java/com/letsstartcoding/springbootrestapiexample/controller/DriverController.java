@@ -23,69 +23,63 @@ import com.letsstartcoding.springbootrestapiexample.model.Driver;
 public class DriverController {
 	
 	@Autowired
-	DriverDAO employeeDAO;
+	DriverDAO DAO;
 	
-	/* to save an employee*/
+	/* to save a Driver*/
 	@PostMapping("/add")
 	public Driver createEmployee(@Valid @RequestBody Driver emp) {
-		return employeeDAO.save(emp);
+		return DAO.save(emp);
 	}
 	
-	/*get all employees*/
+	/*get all Driver*/
 	@GetMapping("/getall")
 	public List<Driver> getAllDriver(){
-		return employeeDAO.findAll();
+		return DAO.findAll();
 	}
-//	
-//	/*get employee by empid*/
-//	@GetMapping("/employees/{id}")
-//	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value="id") Long empid){
-//		
-//		Employee emp=employeeDAO.findOne(empid);
-//		
-//		if(emp==null) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		return ResponseEntity.ok().body(emp);
-//		
-//	}
-//	
-//	
-//	/*update an employee by empid*/
-//	@PutMapping("/employees/{id}")
-//	public ResponseEntity<Employee> updateEmployee(@PathVariable(value="id") Long empid,@Valid @RequestBody Employee empDetails){
-//		
-//		Employee emp=employeeDAO.findOne(empid);
-//		if(emp==null) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		
-//		emp.setName(empDetails.getName());
-//		emp.setDesignation(empDetails.getDesignation());
-//		emp.setExpertise(empDetails.getExpertise());
-//		
-//		Employee updateEmployee=employeeDAO.save(emp);
-//		return ResponseEntity.ok().body(updateEmployee);
-//		
-//		
-//		
-//	}
-//	
-//	/*Delete an employee*/
-//	@DeleteMapping("/employees/{id}")
-//	public ResponseEntity<Employee> deleteEmployee(@PathVariable(value="id") Long empid){
-//		
-//		Employee emp=employeeDAO.findOne(empid);
-//		if(emp==null) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		employeeDAO.delete(emp);
-//		
-//		return ResponseEntity.ok().build();
-//		
-//		
-//	}
+	
+	/*get Driver by id*/
+	@GetMapping("/{id}")
+	public ResponseEntity<Driver> getDriverById(@PathVariable(value="id") Long id){
+		
+		Driver dri = DAO.findOne(id);
+		
+		if(dri==null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok().body(dri);
+		
+	}
 	
 	
+	/*update an Driver by id*/
+	@PutMapping("/status/{id}")
+	public ResponseEntity<Driver> updateStatus(@PathVariable(value="id") Long id,@Valid @RequestBody String status){
+		
+		Driver dri= DAO.findOne(id);
+		if(dri==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		dri.setStatus(status);
+		
+		Driver updateDriver= DAO.save(dri);
+		return ResponseEntity.ok().body(updateDriver);
+		
+		
+		
+	}
+	
+	/*Delete a Driver by id*/
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Driver> deleteEmployee(@PathVariable(value="id") Long empid){
+		
+		Driver dri= DAO.findOne(empid);
+		if(dri==null) {
+			return ResponseEntity.notFound().build();
+		}
+		DAO.delete(dri);
+		
+		return ResponseEntity.ok().build();
+	}
 
 }
