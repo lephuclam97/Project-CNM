@@ -1,5 +1,7 @@
 package com.letsstartcoding.springbootrestapiexample.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.letsstartcoding.springbootrestapiexample.dao.RequestDAO;
+import com.letsstartcoding.springbootrestapiexample.model.Driver;
 import com.letsstartcoding.springbootrestapiexample.model.Request;
 
 @RestController
@@ -35,6 +38,10 @@ public class RequestController{
 	/*get all Request*/
 	@GetMapping("/getall")
 	public List<Request> getAllRequest(){
+		List <Request> listReq= DAO.findAll();
+		Collections.sort(listReq);
+		
+		
 		return DAO.findAll();
 	}
 

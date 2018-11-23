@@ -1,5 +1,7 @@
 package com.letsstartcoding.springbootrestapiexample.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -33,7 +35,7 @@ public class DriverController {
 	
 	/*get all Driver*/
 	@GetMapping("/getall")
-	public List<Driver> getAllDriver(){
+	public List<Driver> getAllDriver(){		
 		return DAO.findAll();
 	}
 	

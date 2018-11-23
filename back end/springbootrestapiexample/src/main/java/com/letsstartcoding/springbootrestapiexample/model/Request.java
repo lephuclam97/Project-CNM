@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name="Request")
 @EntityListeners(AuditingEntityListener.class)
-public class Request {
+public class Request implements Comparable<Request>{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id_request;
@@ -145,9 +145,15 @@ public class Request {
 	public void setStatus(String status) {
 		Status = status;
 	}
+
+
 	
-	
-	
-	
-	
+	 @Override
+	  public int compareTo(Request u) {
+	    if (getTime() == null || u.getTime() == null) {
+	      return 0;
+	    }
+	    return getTime().compareTo(u.getTime());
+	  }
+
 }

@@ -2,7 +2,7 @@ var stompClient = null;
 
 $( document ).ready(function() {
    
-    var socket = new SockJS('http://localhost:8080/gs-guide-websocket');
+    var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
