@@ -25,7 +25,7 @@
            };
 
 
-           map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+           map = new google.maps.Map(document.getElementById("map"), mapProp);
 
            var myLatLng = {lat, lng};
           
