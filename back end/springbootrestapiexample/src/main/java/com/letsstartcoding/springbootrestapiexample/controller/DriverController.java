@@ -23,7 +23,7 @@ import com.letsstartcoding.springbootrestapiexample.model.Driver;
 @RestController
 @RequestMapping("/Driver")
 public class DriverController {
-	
+
 	@Autowired
 	DriverDAO DAO;
 	
@@ -52,6 +52,25 @@ public class DriverController {
 		
 	}
 	
+	@GetMapping("/login/{name}/{pass}")
+	public ResponseEntity<Driver> loginDriver(@PathVariable(value="name") String name, @PathVariable(value="pass") String pass ){
+		
+		List<Driver> listDri = DAO.findAll();
+		Driver dri = new Driver();
+		dri = null;
+		for(int i=0;i<listDri.size();i++) {
+			if(name.equals(listDri.get(i).getName())==true && pass.equals(listDri.get(i).getPassword())==true) {
+				dri = listDri.get(i);
+			}
+		}
+		
+		if(dri==null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok().body(dri);
+		
+	}
+	
 	
 	/*update an Driver by id*/
 	@PutMapping("/status/{id}")
@@ -66,8 +85,6 @@ public class DriverController {
 		
 		Driver updateDriver= DAO.save(dri);
 		return ResponseEntity.ok().body(updateDriver);
-		
-		
 		
 	}
 	

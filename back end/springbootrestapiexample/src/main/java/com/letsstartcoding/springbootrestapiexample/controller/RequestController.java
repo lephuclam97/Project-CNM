@@ -31,7 +31,8 @@ public class RequestController{
 	/* to save an Request*/
 	@PostMapping("/add")
 	public Request createEmployee(@Valid @RequestBody Request req) {
-		req.setPosition("F");
+		req.setPosition("Not yet");
+		req.setStatus("Waiting..");
 		return DAO.save(req);
 	}
 	
@@ -89,19 +90,32 @@ public class RequestController{
 	}
 	
 	/*update a status of Request by id request*/
-	@PutMapping("/status/{id}")
-	public ResponseEntity<Request> updateStatus(@PathVariable(value="id") Long id,@Valid @RequestBody String status){
+	@PutMapping("/statusSuccess/{id}")
+	public ResponseEntity<Request> updateStatus(@PathVariable(value="id") Long id){
 		
 		Request req = DAO.findOne(id);
 		if(req==null) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		req.setStatus(status);
+		req.setStatus("Success");
 		
 		Request updateRequest = DAO.save(req);
 		return ResponseEntity.ok().body(updateRequest);	
 	}
 	
+	@PutMapping("/statusMove/{id}")
+	public ResponseEntity<Request> updateStatus2(@PathVariable(value="id") Long id){
+		
+		Request req = DAO.findOne(id);
+		if(req==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		req.setStatus("Moving..");
+		
+		Request updateRequest = DAO.save(req);
+		return ResponseEntity.ok().body(updateRequest);	
+	}
 
 }
