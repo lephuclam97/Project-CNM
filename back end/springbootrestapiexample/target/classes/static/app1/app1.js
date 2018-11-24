@@ -44,7 +44,7 @@ function createJSON() {
     obj.address = $("#Address").val();
     obj.note =  $("#Notes").val();
     obj.position = null;
-    obj.status =null;
+    obj.status = 'Waiting..';
     obj.time = d.getTime();
     obj.id_drive =null;
     obj.id_request=100;
