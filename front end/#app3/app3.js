@@ -14,7 +14,7 @@ $( document ).ready(function() {
         	 var source = document.getElementById("product-template").innerHTML;
              var template = Handlebars.compile(source);
              var html = template(data);
-             document.getElementById('products').innerHTML += html;
+             document.getElementById('tbodys').innerHTML += html;
 
         });
     });    
