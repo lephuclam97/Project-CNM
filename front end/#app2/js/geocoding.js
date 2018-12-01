@@ -24,9 +24,15 @@
                mapTypeId: google.maps.MapTypeId.ROADMAP    
            };
 
-
+           document.getElementById("latlng").value = lat + "," + lng;
            map = new google.maps.Map(document.getElementById("map"), mapProp);
+           var geocoder = new google.maps.Geocoder;
+           var infowindow = new google.maps.InfoWindow;
 
+           document.getElementById('submit').addEventListener('click', function() {
+               geocodeLatLng(geocoder, map, infowindow);
+
+           });
            var myLatLng = {lat, lng};
           
 
@@ -36,14 +42,38 @@
                draggable: true,           
            });
 
-           google.maps.event.addListener(marker, 'dragend', function() {
-               var marker_pos = marker.getPosition();
-               document.getElementById('lat').innerHTML = marker_pos.lat();
-               document.getElementById('lng').innerHTML = marker_pos.lng();
-           });
+           
 
      })
      .catch(function(err) { 
          console.log(err);
      })
  }
+
+ function geocodeLatLng(geocoder, map, infowindow) {
+    var input = document.getElementById('latlng').value;
+    var latlngStr = input.split(',', 2);
+    var latlng = {
+        lat: parseFloat(latlngStr[0]),
+        lng: parseFloat(latlngStr[1])
+    };
+    geocoder.geocode({
+        'location': latlng
+    }, function(results, status) {
+        if (status === 'OK') {
+            if (results[0]) {
+                map.setZoom(11);
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map
+                });
+                infowindow.setContent(results[0].formatted_address);
+                infowindow.open(map, marker);
+            } else {
+                window.alert('No results found');
+            }
+        } else {
+            window.alert('Geocoder failed due to: ' + status);
+        }
+    });
+}

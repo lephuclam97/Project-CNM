@@ -2,7 +2,30 @@
 	background-color: #00A396;
 	padding: 15px;
 	color: white;
-	margin-bottom: 0%;
+	
+}
+
+
+#floating-panel{
+  position: absolute;
+  margin: -12% -10% 10% 1%;
+  width: 300px;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+
+}
+#latlng{
+  width: 225px;
+  margin-bottom: 10px;
+  margin-left: 12%;
+  border: rgb(180, 198, 236) 2px solid;
+}
+#submit{
+  margin-left: 31%;
+  background-color: rgb(209, 221, 214);
+  font-weight: bold;
 }
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
