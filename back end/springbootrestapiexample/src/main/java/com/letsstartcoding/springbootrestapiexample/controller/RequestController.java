@@ -67,12 +67,26 @@ public class RequestController{
 			return ResponseEntity.notFound().build();
 		}
 		
-		req.setPosition("T");
+		req.setPosition("Done");
 		
 		Request updateRequest = DAO.save(req);
 		return ResponseEntity.ok().body(updateRequest);	
 	}
 
+	/*update a position of Request by id request*/
+	@PutMapping("/geocoding/{id}/{content}")
+	public ResponseEntity<Request> updateGeocoding(@PathVariable(value="id") Long id, @PathVariable(value="content") String content){
+		
+		Request req = DAO.findOne(id);
+		if(req==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		req.setGeocode(content);
+		
+		Request updateRequest = DAO.save(req);
+		return ResponseEntity.ok().body(updateRequest);	
+	}
 	
 	/*update a driver of Request by id request*/
 	@PutMapping("/driver/{id}")

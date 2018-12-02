@@ -1,13 +1,12 @@
 package com.letsstartcoding.springbootrestapiexample.dao;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.letsstartcoding.springbootrestapiexample.model.Driver;
+import com.letsstartcoding.springbootrestapiexample.model.Request;
 import com.letsstartcoding.springbootrestapiexample.repository.DriverRepository;
 
 @Service
@@ -19,18 +18,18 @@ public class DriverDAO {
 /*to save an driver*/
 	
 	public Driver save(Driver dri) {
-		 try {
-			 	MessageDigest md = MessageDigest.getInstance("MD5");
-		        byte[] passBytes = dri.getPassword().getBytes();
-		        md.reset();
-		        byte[] digested = md.digest(passBytes);
-		        StringBuffer sb = new StringBuffer();
-		        for(int i=0;i<digested.length;i++){
-		            sb.append(Integer.toHexString(0xff & digested[i]));
-		        }
-		        dri.setPassword(sb.toString());
-		    } catch (NoSuchAlgorithmException ex) {
-		    }
+//		 try {
+//			 	MessageDigest md = MessageDigest.getInstance("MD5");
+//		        byte[] passBytes = dri.getPassword().getBytes();
+//		        md.reset();
+//		        byte[] digested = md.digest(passBytes);
+//		        StringBuffer sb = new StringBuffer();
+//		        for(int i=0;i<digested.length;i++){
+//		            sb.append(Integer.toHexString(0xff & digested[i]));
+//		        }
+//		        dri.setPassword(sb.toString());
+//		    } catch (NoSuchAlgorithmException ex) {
+//		    }
 		return DriverRepository.save(dri);
 	}
 	
@@ -45,6 +44,19 @@ public class DriverDAO {
 	/*get an driver by id*/
 	public Driver findOne(Long id) {
 		return DriverRepository.findOne(id);
+	}
+	
+	
+	public Driver findname(String name) {
+		List<Driver> listDri = DriverRepository.findAll();
+		Driver dri = new Driver();
+		dri= null;
+		for(int i=0;i<listDri.size();i++) {
+			if(listDri.get(i).getName()== name) {
+				dri = listDri.get(i);
+			}
+		}
+		return dri;
 	}
 	
 	

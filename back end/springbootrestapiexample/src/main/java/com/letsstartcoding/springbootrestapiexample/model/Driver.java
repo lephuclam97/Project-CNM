@@ -36,21 +36,23 @@ public class Driver {
 	private String Status;
 
 	private String Waitback;
+	
+	private String address;
 
 	public Driver() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Driver(Long idDriver, String password, String name, String response, String status, String waitback) {
-		super();
-		id_driver = idDriver;
-		Password = password;
-		Name = name;
-		Response = response;
-		Status = status;
-		Waitback = waitback;
-	}
+//	public Driver(Long idDriver, String password, String name, String response, String status, String waitback) {
+//		super();
+//		id_driver = idDriver;
+//		Password = password;
+//		Name = name;
+//		Response = response;
+//		Status = status;
+//		Waitback = waitback;
+//	}
 	
 
 	public Long getId_driver() {
@@ -103,6 +105,14 @@ public class Driver {
 
 	public void setWaitback(String waitback) {
 		Waitback = waitback;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	

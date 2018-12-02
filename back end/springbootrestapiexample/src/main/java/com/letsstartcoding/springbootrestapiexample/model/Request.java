@@ -34,6 +34,7 @@ public class Request implements Comparable<Request>{
 	private String Note;
 	private String Position;
 	private String Status;
+	private String geocode;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
@@ -60,8 +61,6 @@ public class Request implements Comparable<Request>{
 	public void setId_driver(Long id_driver) {
 		this.id_driver = id_driver;
 	}
-
-
 
 
 	public String getName() {
@@ -148,7 +147,15 @@ public class Request implements Comparable<Request>{
 
 
 	
-	 @Override
+	public String getGeocode() {
+		return geocode;
+	}
+
+	public void setGeocode(String geocode) {
+		this.geocode = geocode;
+	}
+
+	@Override
 	  public int compareTo(Request u) {
 	    if (getTime() == null || u.getTime() == null) {
 	      return 0;

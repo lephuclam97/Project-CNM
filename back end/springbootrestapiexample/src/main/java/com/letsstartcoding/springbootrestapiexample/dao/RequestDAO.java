@@ -38,5 +38,11 @@ public class RequestDAO {
 	public void delete(Request dri) {
 		RequestRepository.delete(dri);
 	}
-
+	
+//	public static void main(String args[]) {
+//		RequestDAO dao = new RequestDAO(); 
+//		Long a= (long) 95;
+//		Request req = dao.findOne(a);
+//		System.out.println(req.getName()+"AAAAAAAA");
+//	}
 }

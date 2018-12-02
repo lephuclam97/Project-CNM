@@ -1,116 +1,204 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello WebSocket</title>
-    <link rel="stylesheet" type="text/css" href="app3.css">
-  	<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<title>Hello WebSocket</title>
+<meta charset="utf-8">
 
-	<!-- <link href="/main.css" rel="stylesheet"> -->
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 
-    <script src="app3.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
-	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/core.js">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"> -->
-    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-		<div class="head-contend">
-		    <h2><strong>KRAB</strong></h2>      
-		</div>
-		<br>
-		<div class="col-sm-12 col-md-12">
-			SHOW INFOMATION
-		</div>
-	
-		
-	   <div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-12 col-md-12">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Time</th>
-								<th>Name</th>
-								<th>Phone</th>
-								<th>Address</th>
-								<th>Id_Driver</th>
-							</tr>
-						</thead>
-						<tbody id="products">
-						</tbody>
-					</table>
+	<noscript>
+		<h2 style="color: #ff0000">Seems your browser doesn't support
+			Javascript! Websocket relies on Javascript being enabled. Please
+			enable Javascript and reload this page!</h2>
+	</noscript>
+	<div class="head-contend">
+		<h2>
+			<strong>KRAB</strong>
+		</h2>
+	</div>
+	<br>
+	<div class="col-sm-12 col-md-12"><h4>SHOW INFOMATION</h4></div>
+
+
+	<div class="limiter centertext">
+			<div class="container-table100">
+				<div class="wrap-table100 centertext">
+					<div class="table100 ver1 m-b-110 centertext">
+						<table data-vertable="ver1" id="tableRemove">
+							<thead>
+								<tr class="row100 head centertext newhead">
+									<th class="centertext column1" data-column="column1">&nbsp &nbsp &nbsp Name</th>
+									<th class="centertext column2" data-column="column2">Location</th>
+									<th class="centertext column3" data-column="column3">Address_Customer</th>
+									<th class="centertext column4" data-column="column4">Id_Driver</th>
+									<th class="centertext column5" data-column="column5">Info_Driver</th>
+									<th class="centertext column6" data-column="column6">Status</th>
+									
+								</tr>
+							</thead>
+							<tbody id="tbodys" class="centertext">  
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
-		<script id="product-template" type="text/x-handlebars-template">
+	<script id="product-template" type="text/x-handlebars-template">
 			{{#each this}}
 			<tr>
-				<th>{{time}}</th>
-				<th>{{name}}</th>
-				<th>{{phone}}</th>
+				<th>&nbsp&nbsp{{name}}</th>
+				{{#if position}}
+   				<th>
+						<button id="buttonView" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#inforReq" onclick="locationIdentifier('{{address}}','{{id_driver}}')">{{position}}</button>
+				</th>
+				{{else}}
+					<th>not yet</th>
+ 				 {{/if}}
 				<th>{{address}}</th>
-				<th>{{id_driver}}</th>
+		
+				{{#if id_driver}}
+   				 <th>&nbsp &nbsp &nbsp{{id_driver}}</th>
+				{{else}}
+					<th>none</th>
+				  {{/if}}
+				  
+				<th>
+					&nbsp &nbsp &nbsp 
+					<button id="add-btn" class="btn btn-primary" onclick="loadDriver('{{id_driver}}'); document.getElementById('id01').style.display='block';"><i class="fa fa-file-text-o"></i></button>
+				</th>  
+				{{#if status}}
+   				 <th>{{status}}</th>
+				{{else}}
+					<th>{{status}}</th>
+ 				 {{/if}}
+				
 			</tr>
 			{{/each}}
 		</script>
-		<div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Greetings</th>
-                </tr>
-                </thead>
-                <tbody id="greetings">
-                </tbody>
-            </table>
-        </div>
-    </div>
-		<!-- Footer -->
-		<footer class="page-footer font-small teal pt-4 head-contend">
 
-			<!-- Footer Text -->
-			<div class="container-fluid text-center text-md-left">
-
-				<!-- Grid row -->
-				<div class="row">
-
-					<!-- Grid column -->
-					<div class="col-md-6 mt-md-0 mt-3">
-
-						<!-- Content -->
-						<h5 class="text-uppercase font-weight-bold">Footer text 1</h5>
-						<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus corrupti animi sequi aliquid magnam debitis, maxime quam recusandae harum esse fugiat. Itaque, culpa?</p>
-
+		<div id="inforReq" class="modal fade" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Vị trí khách hàng</h4>
+						</div>
+						<div class="modal-body">
+							<div>Thông tin khách hàng</div>
+							<br>
+							<div>
+		
+								<strong class="col-md-4">Address customer: </strong> <span id="reqAddr"
+									class="col-md-8"></span>
+							</div>
+							<div>
+									<strong class="col-md-4">Address Driver: </strong> <span id="reqAddDriver"
+									class="col-md-8"></span>	
+							</div>
+						</div>
+						<br> <br>
+						<div id="map" style="width: 500px; height: 380px;"></div>
+					
+						<script
+							src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtRB-MgrsBuBBB_HvpA5zwuJP9iwjN9T8&callback=initMap"
+							async defer></script>
 					</div>
-					<!-- Grid column -->
-
+				</div>
+			</div>
+			
+			
 	
+		<div id="id01" class="modal2">
+		  
+		  <form class="modal2-content animate" accept-charset="UTF-8">
+		    <div class="imgcontainer">
+		      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+		      
+		    </div>
+		
+		    <div class="container">
+		    	<div style=" color: DodgerBlue; font-size: 23px;">Driver Account</div>
+		    	<br>
+		      <label><b>UserID</b></label>
+		      <input type="text" style="padding: 8px;" id="id1" placeholder="Enter Username" name="userid" autocomplete="off" required>
+		      
+		      <label ><b>Fullname</b></label>
+		      <input type="text" style="padding: 8px;" id="name1"  placeholder="Enter Fullname" name="name" autocomplete="off" required>
+		
+		      <label><b>Address</b></label>
+		      <input type="text" style="padding: 8px;" id="address1" placeholder="Enter Phone" name="phone" autocomplete="off" required>
+		      
+		      <label><b>Status</b></label>
+		      <input type="text" style="padding: 8px;" id="status1" placeholder="Enter Email" name="email" autocomplete="off" required>
 
-					<!-- Grid column -->
-					<div class="col-md-6 mb-md-0 mb-3">
+		      
+		    </div>
+		
+		    
+		  </form>
+		</div>
+	
+				
 
-						<!-- Content -->
-						<h5 class="text-uppercase font-weight-bold">Footer text 2</h5>
-						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio deserunt fuga perferendis modi earum commodi aperiam temporibus quod nulla nesciunt aliquid debitis ullam omnis quos ipsam, aspernatur id excepturi hic.</p>
+	<!-- Footer -->
+	<footer class="page-footer font-small teal pt-4 head-contend">
 
-					</div>
-					<!-- Grid column -->
+		<!-- Footer Text -->
+		<div class="container-fluid text-center text-md-left">
+
+			<!-- Grid row -->
+			<div class="row">
+
+				<div class="col-md-6 mt-md-0 mt-3">
+
+
+					<h5 class="text-uppercase font-weight-bold">Footer text 1</h5>
+					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+						Expedita sapiente sint, nulla, nihil repudiandae commodi
+						voluptatibus corrupti animi sequi aliquid magnam debitis, maxime
+						quam recusandae harum esse fugiat. Itaque, culpa?</p>
 
 				</div>
-				<!-- Grid row -->
+
+				<div class="col-md-6 mb-md-0 mb-3">
+
+					<!-- Content -->
+					<h5 class="text-uppercase font-weight-bold">Footer text 2</h5>
+					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+						Optio deserunt fuga perferendis modi earum commodi aperiam
+						temporibus quod nulla nesciunt aliquid debitis ullam omnis quos
+						ipsam, aspernatur id excepturi hic.</p>
+
+				</div>
 
 			</div>
 
-		</footer>
+
+		</div>
+
+	</footer>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+	<script src="app3.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+	<script src="geocoding.js"></script>
+	
+	
 </body>
 </html>
