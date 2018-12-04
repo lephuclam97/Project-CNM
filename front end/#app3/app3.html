@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello WebSocket</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/style.css">
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+</head>
+<body>
+	<noscript>
+		<h2 style="color: #ff0000">Seems your browser doesn't support
+			Javascript! Websocket relies on Javascript being enabled. Please
+			enable Javascript and reload this page!</h2>
+	</noscript>
+	<div class="head-contend">
+		<h2>
+			<strong>KRAB</strong>
+		</h2>
+	</div>
+	<br>
+	<div class="col-sm-12 col-md-12"><h4>SHOW INFOMATION</h4></div>
+
+
+	<div class="limiter">
+			<div class="container-table100">
+				<div class="wrap-table100 centertext">
+					<div class="table100 ver1 m-b-110 centertext">
+						<table data-vertable="ver1">
+							<thead>
+								<tr class="row100 head centertext">
+									<th class="centertext column1" data-column="column1">Name</th>
+									<th class="centertext column2" data-column="column2">Location</th>
+									<th class="centertext column3" data-column="column3">Address_Customer</th>
+									<th class="centertext column4" data-column="column4">Id_Driver</th>
+									<th class="centertext column5" data-column="column5">Address_Driver</th>
+									<th class="centertext column6" data-column="column6">Status</th>
+									
+								</tr>
+							</thead>
+							<tbody id="tbodys" class="centertext">  
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script id="product-template" type="text/x-handlebars-template">
+			{{#each this}}
+			<tr>
+				<th>{{name}}</th>
+				{{#if position}}
+   				<th>
+						<button id="buttonView" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#inforReq" onclick="locationIdentifier('{{address}}')">{{position}}</button>
+				</th>
+				{{else}}
+					<th>not yet</th>
+ 				 {{/if}}
+				<th>{{address}}</th>
+		
+				{{#if id_driver}}
+   				 <th>{{id_driver}}</th>
+				{{else}}
+					<th>none</th>
+				  {{/if}}
+				  
+				<th>
+					<p>
+						<span class="input">
+							<input id = "addressDriver" type="text" placeholder="Enter address of driver">
+							<span></span>
+						</span>
+					</p>
+				</th>  
+				{{#if status}}
+   				 <th>{{status}}</th>
+				{{else}}
+					<th>{{status}}</th>
+ 				 {{/if}}
+				
+			</tr>
+			{{/each}}
+		</script>
+
+		<div id="inforReq" class="modal fade" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Vị trí khách hàng</h4>
+						</div>
+						<div class="modal-body">
+							<div>Thông tin khách hàng</div>
+							<br>
+							<div>
+		
+								<strong class="col-md-4">Address customer: </strong> <span id="reqAddr"
+									class="col-md-8"></span>
+							</div>
+							<div>
+									<strong class="col-md-4">Address Driver: </strong> <span id="reqAddDriver"
+									class="col-md-8"></span>	
+							</div>
+						</div>
+						<br> <br>
+						<div id="map" style="width: 500px; height: 380px;"></div>
+					
+						<script
+							src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtRB-MgrsBuBBB_HvpA5zwuJP9iwjN9T8&callback=initMap"
+							async defer></script>
+					</div>
+				</div>
+			</div>
+	<!-- Footer -->
+	<footer class="page-footer font-small teal pt-4 head-contend">
+
+		<!-- Footer Text -->
+		<div class="container-fluid text-center text-md-left">
+
+			<!-- Grid row -->
+			<div class="row">
+
+				<div class="col-md-6 mt-md-0 mt-3">
+
+
+					<h5 class="text-uppercase font-weight-bold">Footer text 1</h5>
+					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+						Expedita sapiente sint, nulla, nihil repudiandae commodi
+						voluptatibus corrupti animi sequi aliquid magnam debitis, maxime
+						quam recusandae harum esse fugiat. Itaque, culpa?</p>
+
+				</div>
+
+				<div class="col-md-6 mb-md-0 mb-3">
+
+					<!-- Content -->
+					<h5 class="text-uppercase font-weight-bold">Footer text 2</h5>
+					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+						Optio deserunt fuga perferendis modi earum commodi aperiam
+						temporibus quod nulla nesciunt aliquid debitis ullam omnis quos
+						ipsam, aspernatur id excepturi hic.</p>
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+	</footer>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="geocoding.js"></script>
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<script src="app3.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	
+</body>
+</html>
